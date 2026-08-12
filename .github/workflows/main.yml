@@ -1,16 +1,30 @@
-package me.menemen.menemencore;
+name: Build MenemenCore
 
-import org.bukkit.plugin.java.JavaPlugin;
+on:
+  push:
+  workflow_dispatch:
 
-public class MenemenCore extends JavaPlugin {
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-    @Override
-    public void onEnable() {
-        getLogger().info("MenemenCore aktif!");
-    }
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    @Override
-    public void onDisable() {
-        getLogger().info("MenemenCore kapatildi!");
-    }
-}
+      - name: Setup Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v3
+        with:
+          arguments: build
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: MenemenCore
+          path: build/libs/*.jar

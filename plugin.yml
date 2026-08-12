@@ -1,0 +1,8 @@
+name: MenemenCore
+version: 1.0
+main: me.menemen.menemencore.MenemenCore
+api-version: '1.21'
+
+commands:
+  menemen:
+    description: MenemenCore test komutu
